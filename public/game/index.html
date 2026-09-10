@@ -432,6 +432,7 @@
 </style>
 <script src="/js/games_lib/ludiAdapter.js" charset="utf-8"></script>
 </head>
+<body>
     <div id="transition-overlay"></div>
 
     <!-- IN-GAME HUD -->
@@ -511,13 +512,7 @@
     </div>
     <div id="og-game-holder"></div>
     <script>
-    // Clear all saved progress on page load (refresh = reset)
-    try {
-      localStorage.removeItem('subway_total_coins');
-      localStorage.removeItem('subway_highscore');
-      localStorage.removeItem('subway_last_session_coins');
-      localStorage.removeItem('subway_withdrawal_amount');
-    } catch(e) {}
+    // Persistência entre ecrãs: NÃO limpar subway_* ao carregar a corrida.
 
     var gameStarted = false;
     var hudVisible = false;
@@ -956,7 +951,6 @@
       }
       fadeAndNavigate('/?step=withdraw');
     }
-    </script>
     </script>
 </body>
 </html>
