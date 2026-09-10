@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
 const META_COINS = 110;
 
 function fmtKz(v: number) {
-  return v.toLocaleString("pt-PT").replace(/,/g, ".") + " Kz";
+  return v.toLocaleString("pt-PT").replace(/[\s\u00a0\u202f,]/g, ".") + " Kz";
 }
 
 function useFade() {
