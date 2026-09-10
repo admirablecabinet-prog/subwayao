@@ -51,7 +51,7 @@
       }
 
       function absPath(e) {
-          return "/" + e.replace(/^\.\/|\//, "")
+          return "/" + e.replace(/^\.\//, "").replace(/^\//, "")
       }
 
       function loadJson(e, n, t) {
