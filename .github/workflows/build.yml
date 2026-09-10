@@ -24,15 +24,8 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: List built files (Debug)
-        run: ls -la
-
       - name: Upload html artifact
         uses: actions/upload-artifact@v4
         with:
           name: single-html-output
-          path: |
-            dist/
-            build/
-            *.html
-          if-no-files-found: warn
+          path: .output/
