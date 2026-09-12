@@ -20,6 +20,19 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [
+      // Warm the game's critical resources while the user is still on the
+      // funnel, so "JOGAR AGORA" transitions to a running game near-instantly.
+      { rel: "prefetch", href: "/game/index.html", as: "document" },
+      { rel: "prefetch", href: "/game/game.css", as: "style" },
+      { rel: "prefetch", href: "/game/game.js", as: "script" },
+      { rel: "prefetch", href: "/js/games_lib/ludiAdapter.js", as: "script" },
+      { rel: "prefetch", href: "/js/inflate.min.js", as: "script" },
+      { rel: "prefetch", href: "/js/vendor.js", as: "script" },
+      { rel: "prefetch", href: "/js/main.js", as: "script" },
+      { rel: "prefetch", href: "/assets/data/config.json", as: "fetch" },
+      { rel: "prefetch", href: "/assets/preload/splash_mip.png", as: "image" },
+    ],
   }),
 });
 
