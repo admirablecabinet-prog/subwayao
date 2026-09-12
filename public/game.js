@@ -1,10 +1,6 @@
-// Clear all saved progress on page load (refresh = reset)
-    try {
-      localStorage.removeItem('subway_total_coins');
-      localStorage.removeItem('subway_highscore');
-      localStorage.removeItem('subway_last_session_coins');
-      localStorage.removeItem('subway_withdrawal_amount');
-    } catch(e) {}
+// NOTE: progress keys are intentionally persisted (not reset on load) so the
+// funnel's completion poll (subway_total_coins >= 110 / subway_withdrawal_amount)
+// keeps working across the game -> funnel -> game loop.
 
     var gameStarted = false;
     var hudVisible = false;
@@ -294,10 +290,11 @@
         progText.className = 'go-bar-text complete';
       }
 
-      // If goal is met, auto-redirect to withdraw
+      // If goal is met, notify the funnel (or redirect standalone)
       if (faltam <= 0) {
         localStorage.setItem('subway_withdrawal_amount', balanceKz);
         setTimeout(function() {
+          if (postToParent({ type: 'subway:bonus', amount: balanceKz })) return;
           fadeAndNavigate('/?step=withdraw');
         }, 1500);
       }
@@ -368,7 +365,21 @@
     }
     window.fadeAndNavigate = fadeAndNavigate;
 
+    // When the game runs embedded inside the funnel iframe, navigation must be
+    // handed back to the parent page (the funnel controls the steps). Otherwise
+    // (standalone game.html) we keep the old in-page navigation.
+    function postToParent(msg) {
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(msg, '*');
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
     function goToMenu() {
+      if (postToParent({ type: 'subway:menu' })) return;
       fadeAndNavigate('/');
     }
 
@@ -441,5 +452,6 @@
         var balance = totalCoins * 1000;
         localStorage.setItem('subway_withdrawal_amount', balance);
       }
+      if (postToParent({ type: 'subway:withdraw' })) return;
       fadeAndNavigate('/?step=withdraw');
     }

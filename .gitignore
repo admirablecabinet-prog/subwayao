@@ -31,5 +31,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# Deprecated single-file build (game is now served modular from public/game/)
-public/subway-premiado-singlefile.html
+
