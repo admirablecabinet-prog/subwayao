@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, minimal-ui">
+<meta name="description" content="Corre, apanha moedas e saca os teus ganhos em Kz.">
+<title>Subway Premiado - Corrida</title>
+<base href="/">
+<link rel="icon" href="/NewYorkIcon.png">
+<link rel="preload" href="/js/inflate.min.js" as="script">
+<link rel="preload" href="/js/vendor.js" as="script">
+<link rel="preload" href="/js/main.js" as="script">
+<link rel="preload" href="/assets/data/config.json" as="fetch">
+<link rel="preload" href="/assets/preload/splash_mip.png" as="image">
+<link rel="preload" href="/assets/font/lilita-one.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/font/titan-one.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/game.css">
+<script src="/js/games_lib/ludiAdapter.js" charset="utf-8"></script>
+</head>
+    <div id="transition-overlay"></div>
+
+    <!-- IN-GAME HUD -->
+    <div id="game-hud" style="display: flex;">
+      <div class="hud-row">
+        <div class="hud-progress-wrap" style="flex-direction:column;gap:3px;">
+          <div class="hud-progress-track">
+            <div class="hud-progress-fill" id="hud-progress-fill" style="width:0%"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;width:100%;font-family:'Lilita One',cursive;font-size:9px;color:rgba(255,255,255,0.5);text-shadow:1px 1px 1px #000;margin-top:1px;">
+            <span>0 Kz</span>
+            <span>110.000 Kz</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid #f39c12;border-radius:16px;padding:6px 14px;box-shadow:0 4px 12px rgba(0,0,0,0.5),0 0 8px rgba(243,156,18,0.3),inset 0 1px 0 rgba(255,255,255,0.08);font-family:'Lilita One',cursive;flex-shrink:0;">
+          <span style="font-size:18px;">💰</span>
+          <div style="display:flex;flex-direction:column;line-height:1;">
+            <span style="font-size:8px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:2px;">Saldo</span>
+            <span id="hud-balance" style="font-size:18px;color:#55ff55;text-shadow:0 0 6px rgba(85,255,85,0.4);font-family:'Lilita One',cursive;">0 Kz</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="withdraw-float-btn">
+      <button onclick="goToWithdraw()">💰 SACAR</button>
+    </div>
+
+    <!-- GAME OVER MODAL -->
+    <div id="gameover-modal-container">
+      <div class="go-card">
+        <div class="go-stars">
+          <span class="go-star">⭐</span>
+          <span class="go-star" style="font-size:28px;margin-top:-6px;">⭐</span>
+          <span class="go-star">⭐</span>
+        </div>
+        <div class="go-header">
+          <div class="go-header-title">Corrida Terminada</div>
+          <div class="go-header-sub">Boa tentativa! Tenta outra vez!</div>
+        </div>
+        <div class="go-body">
+          <!-- Score -->
+          <div class="go-score-row">
+            <span class="go-score-label">🏃 Pontos</span>
+            <span class="go-score-value" id="go-score">0</span>
+          </div>
+          <!-- Coins -->
+          <div class="go-score-row">
+            <span class="go-score-label"><span class="go-coin-icon"></span> Moedas</span>
+            <span class="go-score-value coins-color" id="go-coins">0</span>
+          </div>
+          <!-- Balance Kz -->
+          <div class="go-score-row">
+            <span class="go-score-label">💰 Saldo</span>
+            <span class="go-score-value kz-color" id="go-balance">0 Kz</span>
+          </div>
+          <!-- High Score -->
+          <div class="go-score-row">
+            <span class="go-score-label">🏆 Recorde</span>
+            <span class="go-score-value record-color" id="go-highscore">0</span>
+          </div>
+
+          <!-- Progress -->
+          <div class="go-progress-box">
+            <div class="go-progress-title">Progresso para saque</div>
+            <div class="go-bar-track">
+              <div class="go-bar-fill" id="go-progress-fill" style="width:0%"></div>
+            </div>
+            <div class="go-bar-text" id="go-progress-text">Faltam 110 moedas</div>
+          </div>
+
+          <button class="go-btn-play" id="go-btn-main" onclick="closeGameOver()">▶ JOGAR DE NOVO</button>
+          <button class="go-btn-play" id="go-btn-withdraw" style="display:none;background:linear-gradient(180deg,#f39c12 0%,#e67e22 100%);margin-top:8px;" onclick="goToWithdraw()">💰 SACAR AGORA</button>
+          <button class="go-btn-menu" onclick="goToMenu()">Voltar ao Menu</button>
+        </div>
+      </div>
+    </div>
+    <div id="og-game-holder"></div>
+    <script src="/game.js"></script>
+</body>
+</html>
